@@ -32,7 +32,6 @@ from PIL import Image, ImageDraw, ImageFont
 
 from library.log import logger
 
-
 class Orientation(IntEnum):
     PORTRAIT = 0
     LANDSCAPE = 2
@@ -246,7 +245,6 @@ class LcdComm(ABC):
 
         # Get text bounding box
         if (font, font_size) not in self.font_cache:
-            print(os.getcwd() + "/monitor/res/fonts/" + font)
             self.font_cache[(font, font_size)] = ImageFont.truetype(os.getcwd() + "/monitor/res/fonts/" + font, font_size)
         font = self.font_cache[(font, font_size)]
         d = ImageDraw.Draw(text_image)
