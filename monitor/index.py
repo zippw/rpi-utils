@@ -21,4 +21,4 @@ lcd_comm.DisplayText("Transparent bold text", x=5, y=250,
                      font="geforce/GeForce-Bold.ttf",
                      font_size=30,
                      font_color=(255, 255, 255),
-                     background_image=background)
+                     background_color=(0, 255, 0))
