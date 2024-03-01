@@ -1,10 +1,6 @@
 from library.lcd.lcd_comm import Orientation
 from library.lcd.lcd_comm_rev_c import LcdCommRevC
 
-print("Текущий рабочий каталог:", current_directory)
-print("Путь к текущему скрипту:", current_script_path)
-print("Путь к корневому каталогу проекта:", project_root_directory)
-
 lcd_comm = LcdCommRevC(com_port="AUTO",
                        display_width=800,
                        display_height=480)
