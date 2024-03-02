@@ -16,5 +16,4 @@ lcd_comm.DisplayText("text", x=1, y=250,
                      font_color=(255, 255, 255),
                      background_color=(0, 255, 0))
 
-background = f"res/backgrounds/screen.png"
-lcd_comm.DisplayBitmap(background)
+lcd_comm.DisplayBitmap(f"screen.png")

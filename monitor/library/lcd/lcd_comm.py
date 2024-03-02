@@ -199,8 +199,8 @@ class LcdComm(ABC):
     ):
         pass
 
-    def DisplayBitmap(self, bitmap_path: str, x: int = 0, y: int = 0, width: int = 0, height: int = 0):
-        image = self.open_image(bitmap_path)
+    def DisplayBitmap(self, bg_file: str, x: int = 0, y: int = 0, width: int = 0, height: int = 0):
+        image = self.open_image(os.getcwd() + "/monitor/res/background/" + bg_file)
         self.DisplayPILImage(image, x, y, width, height)
 
     def DisplayText(
