@@ -1,4 +1,5 @@
-from gpiozero import CPUTemperature, GPUTemperature
+from gpiozero import CPUTemperature
+import psutil
 import serial
 import serial.tools.list_ports
 
@@ -18,9 +19,10 @@ try:
         if line and line == "Hello":
             # ser.write(b"0,192.168.31.201\x0D")
             cpu = CPUTemperature()
-            gpu = GPUTemperature()
             ser.write(bytes("0,{}\x0D".format(cpu.temperature), encoding='utf-8'))
-            ser.write(bytes("1,{}\x0D".format(gpu.temperature), encoding='utf-8'))
+            ser.write(bytes("1,{}\x0D".format(psutil.virtual_memory().available), encoding='utf-8'))
+            ser.write(bytes("2,{}\x0D".format(str(datetime.now().time())), encoding='utf-8'))
+
 
 except ValueError as ve:
     print("Error:", str(ve))

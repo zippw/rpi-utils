@@ -8,10 +8,11 @@ MCUFRIEND_kbv tft;
 
 // DDD.DDD.DDD.DDD
 // 999.99 °C
-int txt_padding[] = { 20, 40 };
+int txt_padding[] = { 20, 40, 60 };
 const char *text_form_str[] = {
-  "IP:   %s",
-  "TEMP: %s \xF7\C"
+  "TEMP:      %s \xF7\C",
+  "FREE MEM:  %s GB",
+  "TIME:      %s"
 };
 String txt_form[] = { "IP: ", "TEMP: " };
 
@@ -28,8 +29,9 @@ void setup(void) {
 
   /* Initial render */
   tft.fillScreen(0x0000);
-  text_form(0, "0.0.0.0");
-  text_form(1, "XX.X");
+  text_form(0, "XX.X");
+  text_form(1, "XX");
+  text_form(2, "XX:XX");
   Serial.println("Hello");
 }
 
