@@ -16,9 +16,9 @@ try:
         line = ser.readline().decode().strip()
 
         if line and line == "Hello":
-            ser.write(b"0,192.168.31.201")
+            ser.write(b"0,192.168.31.201\x0D")
             cpu = CPUTemperature()
-            ser.write(b"1,{cpu.temperature}")
+            ser.write(b"1,{cpu.temperature}\x0D")
 
 except ValueError as ve:
     print("Error:", str(ve))
