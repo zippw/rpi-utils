@@ -31,8 +31,8 @@ except serial.SerialException as se:
 except Exception as e:
     print("An error occurred:", str(e))
 
-# except KeyboardInterrupt:
-#     pass
+except KeyboardInterrupt:
+    pass
 
 finally:
     if ser.is_open:
