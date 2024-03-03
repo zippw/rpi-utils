@@ -15,7 +15,7 @@ try:
     while True:
         line = ser.readline().decode().strip()
 
-        if line and line === "Hello":
+        if line and line == "Hello":
             ser.write(b"0,192.168.31.201")
             cpu = CPUTemperature()
             ser.write(b"1,{cpu.temperature}")
