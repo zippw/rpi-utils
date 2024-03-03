@@ -18,7 +18,7 @@ try:
         if line and line == "Hello":
             ser.write(b"0,192.168.31.201\x0D")
             cpu = CPUTemperature()
-            ser.write(b"1,{}\x0D".format(cpu.temperature))
+            ser.write(bytes("1,{}\x0D".format(cpu.temperature)))
 
 except ValueError as ve:
     print("Error:", str(ve))
