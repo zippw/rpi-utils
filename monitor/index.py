@@ -20,7 +20,7 @@ try:
             cpu = CPUTemperature()
             ser.write(bytes("0,{}\x0D".format(cpu.temperature), encoding='utf-8'))
             ser.write(bytes("1,{}\x0D".format(round(psutil.virtual_memory().available / (2 ** 30), 2)), encoding='utf-8'))
-            ser.write(bytes("2,{}\x0D".format(str(datetime.now().time())), encoding='utf-8'))
+            ser.write(bytes("2,{}\x0D".format(str(datetime.now().strftime("%H:%M"))), encoding='utf-8'))
 
 except ValueError as ve:
     print("Error:", str(ve))
