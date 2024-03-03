@@ -30,6 +30,7 @@ void setup(void) {
   tft.fillScreen(0x0000);
   text_form(0, "0.0.0.0");
   text_form(1, "XX.X");
+  Serial.println("Hello");
 }
 
 void loop() {

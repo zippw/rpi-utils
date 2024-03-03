@@ -12,11 +12,15 @@ try:
 
     ser = serial.Serial(port, baudrate=9600)
 
-    ser.write(b"0,192.168.31.201")
-    cpu = CPUTemperature()
-    ser.write(b"1,{cpu.temperature}")
+    while True:
+        # Read a line of data from the serial port
+        line = ser.readline().decode().strip()
 
-    ser.close()
+        if line:
+            print("Received:", line)
+            # ser.write(b"0,192.168.31.201")
+            # cpu = CPUTemperature()
+            # ser.write(b"1,{cpu.temperature}")
 
 except ValueError as ve:
     print("Error:", str(ve))
@@ -26,3 +30,11 @@ except serial.SerialException as se:
 
 except Exception as e:
     print("An error occurred:", str(e))
+
+# except KeyboardInterrupt:
+#     pass
+
+finally:
+    if ser.is_open:
+        ser.close()
+        print("Serial connection closed.")
