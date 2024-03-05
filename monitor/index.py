@@ -18,27 +18,21 @@ try:
     prev_time = None
 
     while True:
-        msg = ser.readline().decode().strip()
+        line = ser.readline().decode().strip()
 
-        if msg and msg == "Hello":
-            cpu = CPUTemperature()
-            current_cpu_temp = round(cpu.temperature, 2)
-            current_memory_available = round(psutil.virtual_memory().available / (2 ** 30), 2)
-            current_time = str(datetime.now().strftime("%H:%M"))
+        if line and line == "Hello":
+            while True:
+                cpu = CPUTemperature()
+                current_cpu_temp = round(cpu.temperature, 2)
+                current_memory_available = round(psutil.virtual_memory().available / (2 ** 30), 2)
+                current_time = str(datetime.now().strftime("%H:%M"))
 
-            print("a")
+                if (current_cpu_temp != prev_cpu_temp) or (current_memory_available != prev_memory_available) or (current_time != prev_time):
+                    ser.write(bytes("0,{}\x0D".format(current_cpu_temp), encoding='utf-8'))
+                    ser.write(bytes("1,{}\x0D".format(current_memory_available), encoding='utf-8'))
+                    ser.write(bytes("2,{}\x0D".format(current_time), encoding='utf-8'))
 
-            if (current_cpu_temp != prev_cpu_temp) or (current_memory_available != prev_memory_available) or (current_time != prev_time):
-                ser.write(bytes("0,{}\x0D".format(current_cpu_temp), encoding='utf-8'))
-                ser.write(bytes("1,{}\x0D".format(current_memory_available), encoding='utf-8'))
-                ser.write(bytes("2,{}\x0D".format(current_time), encoding='utf-8'))
-
-                print("b")
-                prev_cpu_temp = current_cpu_temp
-                prev_memory_available = current_memory_available
-                prev_time = current_time
-
-        time.sleep(1)
+                time.sleep(1)
 
 except ValueError as ve:
     print("ValueError:", str(ve))
