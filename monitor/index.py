@@ -25,7 +25,7 @@ try:
                 cpu = CPUTemperature()
                 current_cpu_temp = round(cpu.temperature, 2)
                 current_memory_available = round(psutil.virtual_memory().available / (2 ** 30), 2)
-                current_time = str(datetime.now().strftime("%H:%M"))
+                current_time = str(datetime.now().strftime("%H:%M:%S"))
 
                 if (current_cpu_temp != prev_cpu_temp) or (current_memory_available != prev_memory_available) or (current_time != prev_time):
                     ser.write(bytes("0,{}\x0D".format(current_cpu_temp), encoding='utf-8'))
