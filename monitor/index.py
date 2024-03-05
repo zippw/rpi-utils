@@ -16,10 +16,12 @@ try:
     prev_cpu_temp = None
     prev_memory_available = None
     prev_time = None
+    cycles = 0
 
     while True:
         msg = ser.readline().decode().strip()
-        print("got 1 msg")
+        cycles+=1
+        print("got {} msg", cycles)
 
         if msg and msg == "Hello":
             while True:
@@ -35,11 +37,6 @@ try:
                     ser.write(bytes("2,{}\x0D".format(current_time), encoding='utf-8'))
 
                 time.sleep(1)
-
-                new_msg = ser.readline().decode().strip()
-                if new_msg and new_msg == "Hello":
-                    print("got new msg")
-                    break
 
 except ValueError as ve:
     print("ValueError:", str(ve))
