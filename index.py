@@ -8,19 +8,8 @@ import sys
 LED_COUNT = [18, 30, 7]
 LED_PIN = [12, 21, 10]
 
-BUTTON_PIN = 17
-
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-
-lights_check = True
-
-while True:
-    input_state = GPIO.input(BUTTON_PIN)
-    if input_state == False:
-        lights_check = not lights_check
-        print('Button Pressed', lights_check)
-        time.sleep(0.2)
+LIGHTS_SWITCH_BUTTON_PIN = 17
+LIGHTS_SWITCH_FADE_TIME
 
 strips = [
     PixelStrip(LED_COUNT[0], LED_PIN[0]),
@@ -51,8 +40,12 @@ def process_packet(packet):
     for i in range(len(strips)):
         strips[i].show()
 
+def ease_in_out_quint(x):
+    return 16 * x**5 if x < 0.5 else 1 - (2 * x - 2)**5 / 2
+
 if __name__ == '__main__':
     try:
+        # setup local server
         receiver = sacn.sACNreceiver()
         receiver.start()
 
@@ -61,6 +54,23 @@ if __name__ == '__main__':
             process_packet(packet)
         receiver.join_multicast(1)
         input("Press ^C to exit\n")
+
+        # setup btn
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(LIGHTS_SWITCH_BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        lights_check = True
+        while True:
+            input_state = GPIO.input(LIGHTS_SWITCH_BUTTON_PIN)
+            if input_state == False:
+                lights_check = not lights_check
+
+                for i in range(101):
+                    x = i / 100
+                    print(255 * ease_in_out_quint(x))
+                    sleep(LIGHTS_SWITCH_FADE_TIME / 100)
+                print('Button Pressed', lights_check)
+                time.sleep(0.2)
+
     except KeyboardInterrupt:
         receiver.leave_multicast(1)
         receiver.stop()
