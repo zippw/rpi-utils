@@ -67,8 +67,8 @@ if __name__ == '__main__':
 
                 for i in range(21):
                     x = i / 20
-                    print(x, i, i / 20)
                     ease_value = ease_in_out_quint(x)
+                    print(ease_value)
                     value = 255 * ease_value if lights_check else abs(255 - (255 * ease_value))
                     time.sleep(LIGHTS_SWITCH_FADE_TIME / 20)
                 print('Button Pressed', lights_check)
