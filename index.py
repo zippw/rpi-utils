@@ -71,7 +71,7 @@ if __name__ == '__main__':
                     brightness = 255 * ease_value if lights_check else abs(255 - (255 * ease_value))
 
                     for i in range(len(strips)):
-                        strips[i].setBrightness(brightness)
+                        strips[i].setBrightness(round(brightness))
 
                     time.sleep(LIGHTS_SWITCH_FADE_TIME / 20)
 
