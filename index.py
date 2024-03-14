@@ -45,7 +45,7 @@ def process_packet(packet):
         strips[i].show()
 
 def ease_in_out_quint(x):
-    return 16 * x**5 if x < 0.5 else 1 - (2 * x - 2)**5 / 2
+    return 16 * x**5 if x < 0.5 else 1 - ((-2 * x + 2)**5) / 2
 
 if __name__ == '__main__':
     try:
