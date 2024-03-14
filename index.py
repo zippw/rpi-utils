@@ -65,10 +65,10 @@ if __name__ == '__main__':
             if input_state == False:
                 lights_check = not lights_check
 
-                for i in range(101):
-                    x = i / 100
-                    print(255 * ease_in_out_quint(x))
-                    time.sleep(LIGHTS_SWITCH_FADE_TIME / 100)
+                for i in range(21):
+                    x = i / 20
+                    print(round(255 * ease_in_out_quint(x)))
+                    time.sleep(LIGHTS_SWITCH_FADE_TIME / 20)
                 print('Button Pressed', lights_check)
                 time.sleep(0.2)
 
