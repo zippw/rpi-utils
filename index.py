@@ -5,12 +5,16 @@ import numpy
 import time
 import sys
 
-LED_COUNT = [18, 30, 7]
-LED_PIN = [12, 21, 10]
-
+# setup lights switch
 LIGHTS_SWITCH_BUTTON_PIN = 17
 LIGHTS_SWITCH_FADE_TIME = 3
 
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(LIGHTS_SWITCH_BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+# setup lights
+LED_COUNT = [18, 30, 7]
+LED_PIN = [12, 21, 10]
 strips = [
     PixelStrip(LED_COUNT[0], LED_PIN[0]),
     PixelStrip(LED_COUNT[1], LED_PIN[1]),
@@ -53,11 +57,8 @@ if __name__ == '__main__':
         def callback(packet):
             process_packet(packet)
         receiver.join_multicast(1)
-        input("Press ^C to exit\n")
 
-        # setup btn
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(LIGHTS_SWITCH_BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        # lights switch
         lights_check = True
         while True:
             input_state = GPIO.input(LIGHTS_SWITCH_BUTTON_PIN)
@@ -70,6 +71,8 @@ if __name__ == '__main__':
                     time.sleep(LIGHTS_SWITCH_FADE_TIME / 100)
                 print('Button Pressed', lights_check)
                 time.sleep(0.2)
+
+        input("Press ^C to exit\n")
 
     except KeyboardInterrupt:
         receiver.leave_multicast(1)
