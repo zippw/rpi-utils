@@ -72,8 +72,6 @@ if __name__ == '__main__':
                 print('Button Pressed', lights_check)
                 time.sleep(0.2)
 
-        input("Press ^C to exit\n")
-
     except KeyboardInterrupt:
         receiver.leave_multicast(1)
         receiver.stop()
