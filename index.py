@@ -67,7 +67,7 @@ if __name__ == '__main__':
                 for i in range(101):
                     x = i / 100
                     print(255 * ease_in_out_quint(x))
-                    sleep(LIGHTS_SWITCH_FADE_TIME / 100)
+                    time.sleep(LIGHTS_SWITCH_FADE_TIME / 100)
                 print('Button Pressed', lights_check)
                 time.sleep(0.2)
 
