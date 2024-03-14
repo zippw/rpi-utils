@@ -7,7 +7,7 @@ import sys
 
 # setup lights switch
 LIGHTS_SWITCH_BUTTON_PIN = 17
-LIGHTS_SWITCH_FADE_TIME = 3
+LIGHTS_SWITCH_FADE_TIME = 1
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(LIGHTS_SWITCH_BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
@@ -65,10 +65,12 @@ if __name__ == '__main__':
             if input_state == False:
                 lights_check = not lights_check
 
-                for i in range(21):
-                    x = i / 20
-                    print(round(255 * ease_in_out_quint(x)))
-                    time.sleep(LIGHTS_SWITCH_FADE_TIME / 20)
+                for i in range(101):
+                    x = i / 100
+                    ease_value = ease_in_out_quint(x)
+                    value = 255 * ease_value if lights_check else 255 - (255 * ease_value)
+                    print(round(value))
+                    time.sleep(LIGHTS_SWITCH_FADE_TIME / 100)
                 print('Button Pressed', lights_check)
                 time.sleep(0.2)
 
