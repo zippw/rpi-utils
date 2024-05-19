@@ -1,9 +1,10 @@
 import time
 
+
+# Gradient generator
 step = 10
 
 
-# Gradient generator
 def stepped(c1, c2, i):
     return round(c1 + ((c2 - c1) / step * i))
 

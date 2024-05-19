@@ -26,6 +26,47 @@ strips = [
 for i in range(len(strips)):
     strips[i].begin()
 
+# Gradient generator
+step = 10
+
+
+def stepped(c1, c2, i):
+    return round(c1 + ((c2 - c1) / step * i))
+
+
+colors = [
+    [255, 113, 206],
+    [185, 103, 255],
+    [1, 205, 254],
+    [5, 255, 161],
+    [255, 251, 250],
+    [255, 113, 206],
+]
+gradient = []
+for i in range(len(colors)):
+    gradient.append(colors[i])
+    n = (i + 1) % len(colors)
+    for j in range(1, step):
+        gradient.append(
+            [
+                stepped(colors[i][0], colors[n][0], j),
+                stepped(colors[i][1], colors[n][1], j),
+                stepped(colors[i][2], colors[n][2], j),
+            ]
+        )
+
+lenta = gradient[slice(0, 7)]
+
+
+def gen_gradient(gradient, c):
+    str = "\x1B[0;0H\x1B[0J"
+    for i in range(len(lenta)):
+        r, g, b = gradient[(c + i) % len(gradient)]
+        str += "\x1B[48;2;{};{};{}m  \x1B[0m".format(int(r), int(g), int(b))
+    print(str)
+    c = (c + 1) % len(gradient)
+    return c
+
 
 def process_packet(packet):
     for i in range(sum(LED_COUNT)):
@@ -67,6 +108,7 @@ if __name__ == "__main__":
 
         # lights switch
         lights_check = True
+        c = 0  # default light counter
         while True:
             input_state = GPIO.input(LIGHTS_SWITCH_BUTTON_PIN)
             if input_state == False:
@@ -80,7 +122,7 @@ if __name__ == "__main__":
                     )
 
                     for i in range(len(strips)):
-                        if (i not in DEFAULT_LIGHT):
+                        if i not in DEFAULT_LIGHT:
                             strips[i].setBrightness(round(brightness))
                             strips[i].show()
 
@@ -88,7 +130,8 @@ if __name__ == "__main__":
 
                 print("Button Pressed", lights_check)
             if lights_check == False:
-                print(True)
+                c = gen_gradient(gradient, c)
+                time.sleep(0.05)
     except KeyboardInterrupt:
         receiver.leave_multicast(1)
         receiver.stop()
