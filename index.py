@@ -63,9 +63,9 @@ def gen_gradient(gradient, c):
     for i in range(len(lenta)):
         r, g, b = gradient[(c + i) % len(gradient)]
         str += "\x1B[48;2;{};{};{}m  \x1B[0m".format(int(r), int(g), int(b))
-        strips[DEFAULT_LIGHT].setPixelColor(i, Color(r, g, b))
+        strips[DEFAULT_LIGHT[0]].setPixelColor(i, Color(r, g, b))
     print(str)
-    strips[DEFAULT_LIGHT].show()
+    strips[DEFAULT_LIGHT[0]].show()
     c = (c + 1) % len(gradient)
     return c
 
