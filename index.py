@@ -14,8 +14,8 @@ GPIO.setup(LIGHTS_SWITCH_BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 # setup lights
 LED_COUNT = [18, 30, 7]
-LED_PIN = [12, 21, 10]
-DEFAULT_LIGHT = [3]  # indexes, ex. 2 -> LED_COUNT[2]
+LED_PIN = [10, 21, 18]
+DEFAULT_LIGHT = [2]  # indexes, ex. 2 -> LED_COUNT[2]
 
 strips = [
     PixelStrip(LED_COUNT[0], LED_PIN[0]),
@@ -60,7 +60,8 @@ if __name__ == "__main__":
 
         @receiver.listen_on("universe", universe=1)
         def callback(packet):
-            process_packet(packet)
+            if lights_check == True:
+                process_packet(packet)
 
         receiver.join_multicast(1)
 
@@ -80,7 +81,6 @@ if __name__ == "__main__":
 
                     for i in range(len(strips)):
                         if (i not in DEFAULT_LIGHT):
-                            print(i)
                             strips[i].setBrightness(round(brightness))
 
                     time.sleep(LIGHTS_SWITCH_FADE_TIME / 20)
