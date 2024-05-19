@@ -15,6 +15,8 @@ GPIO.setup(LIGHTS_SWITCH_BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 # setup lights
 LED_COUNT = [18, 30, 7]
 LED_PIN = [12, 21, 10]
+DEFAULT_LIGHT = [2]  # indexes, ex. 2 -> LED_COUNT[2]
+
 strips = [
     PixelStrip(LED_COUNT[0], LED_PIN[0]),
     PixelStrip(LED_COUNT[1], LED_PIN[1]),
@@ -23,6 +25,7 @@ strips = [
 
 for i in range(len(strips)):
     strips[i].begin()
+
 
 def process_packet(packet):
     for i in range(sum(LED_COUNT)):
@@ -44,10 +47,12 @@ def process_packet(packet):
     for i in range(len(strips)):
         strips[i].show()
 
-def ease_in_out_quint(x):
-    return 16 * x**5 if x < 0.5 else 1 - ((-2 * x + 2)**5) / 2
 
-if __name__ == '__main__':
+def ease_in_out_quint(x):
+    return 16 * x**5 if x < 0.5 else 1 - ((-2 * x + 2) ** 5) / 2
+
+
+if __name__ == "__main__":
     try:
         # setup local server
         receiver = sacn.sACNreceiver()
@@ -56,6 +61,7 @@ if __name__ == '__main__':
         @receiver.listen_on("universe", universe=1)
         def callback(packet):
             process_packet(packet)
+
         receiver.join_multicast(1)
 
         # lights switch
@@ -68,14 +74,17 @@ if __name__ == '__main__':
                 for i in range(21):
                     x = i / 20
                     ease_value = ease_in_out_quint(x)
-                    brightness = 255 * ease_value if lights_check else 255 - (255 * ease_value)
+                    brightness = (
+                        255 * ease_value if lights_check else 255 - (255 * ease_value)
+                    )
 
                     for i in range(len(strips)):
-                        strips[i].setBrightness(round(brightness))
+                        if not i in DEFAULT_LIGHT:
+                            strips[i].setBrightness(round(brightness))
 
                     time.sleep(LIGHTS_SWITCH_FADE_TIME / 20)
 
-                print('Button Pressed', lights_check)
+                print("Button Pressed", lights_check)
 
     except KeyboardInterrupt:
         receiver.leave_multicast(1)
