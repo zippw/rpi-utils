@@ -61,6 +61,7 @@ if __name__ == "__main__":
         @receiver.listen_on("universe", universe=1)
         def callback(packet):
             if lights_check == True:
+                print(lights_check)
                 process_packet(packet)
 
         receiver.join_multicast(1)
