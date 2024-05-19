@@ -83,6 +83,7 @@ if __name__ == "__main__":
                     for i in range(len(strips)):
                         if (i not in DEFAULT_LIGHT):
                             strips[i].setBrightness(round(brightness))
+                            strips[i].show()
 
                     time.sleep(LIGHTS_SWITCH_FADE_TIME / 20)
 
