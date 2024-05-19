@@ -61,7 +61,6 @@ if __name__ == "__main__":
         @receiver.listen_on("universe", universe=1)
         def callback(packet):
             if lights_check == True:
-                print(lights_check)
                 process_packet(packet)
 
         receiver.join_multicast(1)
@@ -88,7 +87,8 @@ if __name__ == "__main__":
                     time.sleep(LIGHTS_SWITCH_FADE_TIME / 20)
 
                 print("Button Pressed", lights_check)
-
+            if lights_check == False:
+                print(True)
     except KeyboardInterrupt:
         receiver.leave_multicast(1)
         receiver.stop()
