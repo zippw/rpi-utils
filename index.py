@@ -15,7 +15,7 @@ GPIO.setup(LIGHTS_SWITCH_BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 # setup lights
 LED_COUNT = [18, 30, 7]
 LED_PIN = [12, 21, 10]
-DEFAULT_LIGHT = [2]  # indexes, ex. 2 -> LED_COUNT[2]
+DEFAULT_LIGHT = [3]  # indexes, ex. 2 -> LED_COUNT[2]
 
 strips = [
     PixelStrip(LED_COUNT[0], LED_PIN[0]),
