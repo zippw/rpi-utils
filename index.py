@@ -57,36 +57,45 @@ def update_lights(gradient, index):
     return (index + 1) % len(gradient)
 
 
-# def process_packet(packet):
-#     pixel_index = 0
-#     for strip_index, strip in enumerate(strips):
-#         for _ in range(LED_COUNT[strip_index]):
-#             if pixel_index * 3 + 2 < len(packet.dmxData):
-#                 r, g, b = packet.dmxData[pixel_index * 3 : pixel_index * 3 + 3]
-#                 strip.setPixelColor(pixel_index, Color(r, g, b))
-#             pixel_index += 1
-#         strip.show()
-
-
 def process_packet(packet):
-    for i in range(sum(LED_COUNT)):
-        try:
-            r = packet.dmxData[i * 3]
-            g = packet.dmxData[i * 3 + 1]
-            b = packet.dmxData[i * 3 + 2]
+    total_leds = sum(LED_COUNT)
 
-            for strip_index in range(len(strips)):
+    for i in range(total_leds):
+        try:
+            r, g, b = packet.dmxData[i * 3 : i * 3 + 3]
+
+            for strip_index, strip in enumerate(strips):
                 if i < LED_COUNT[strip_index]:
-                    strips[strip_index].setPixelColor(i, Color(r, g, b))
+                    strip.setPixelColor(i, Color(r, g, b))
                     break
-                else:
-                    i -= LED_COUNT[strip_index]
+                i -= LED_COUNT[strip_index]
 
         except IndexError:
-            pass
+            break
 
-    for i in range(len(strips)):
-        strips[i].show()
+    for strip in strips:
+        strip.show()
+
+
+# def process_packet(packet):
+#     for i in range(sum(LED_COUNT)):
+#         try:
+#             r = packet.dmxData[i * 3]
+#             g = packet.dmxData[i * 3 + 1]
+#             b = packet.dmxData[i * 3 + 2]
+
+#             for strip_index in range(len(strips)):
+#                 if i < LED_COUNT[strip_index]:
+#                     strips[strip_index].setPixelColor(i, Color(r, g, b))
+#                     break
+#                 else:
+#                     i -= LED_COUNT[strip_index]
+
+#         except IndexError:
+#             pass
+
+#     for i in range(len(strips)):
+#         strips[i].show()
 
 
 def ease_in_out_quint(x):
