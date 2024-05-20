@@ -113,6 +113,7 @@ if __name__ == "__main__":
                 else:
                     lights_check = False
                     print(f"Universe {universe} is now {changed}")
+                time.sleep(1)
                 fade_lights(lights_check)
 
         lights_check = True
