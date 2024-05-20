@@ -108,7 +108,7 @@ if __name__ == "__main__":
             if lights_check == True:
                 process_packet(packet)
         @receiver.listen_on("availability")
-        def callback(changed):
+        def callback(universe, changed):
             print(changed)
             global lights_check
             if (changed == "available"):
