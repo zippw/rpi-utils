@@ -131,7 +131,6 @@ if __name__ == "__main__":
             if GPIO.input(LIGHTS_SWITCH_BUTTON_PIN) == False:
                 lights_check = not lights_check
                 fade_lights(lights_check)
-                print("Button Pressed", lights_check)
 
             if not lights_check:
                 gradient_index = update_lights(gradient, gradient_index)
