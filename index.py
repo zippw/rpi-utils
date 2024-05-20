@@ -59,14 +59,16 @@ lenta = gradient[slice(0, 7)]
 
 
 def gen_gradient(gradient, c):
-    str = "\x1B[0;0H\x1B[0J"
+    # str = "\x1B[0;0H\x1B[0J"
     for i in range(len(lenta)):
         r, g, b = gradient[(c + i) % len(gradient)]
-        str += "\x1B[48;2;{};{};{}m  \x1B[0m".format(int(r), int(g), int(b))
-        strips[DEFAULT_LIGHT[0]].setPixelColor(i, Color(r, g, b))
-    print(str)
-    strips[DEFAULT_LIGHT[0]].show()
+        # str += "\x1B[48;2;{};{};{}m  \x1B[0m".format(int(r), int(g), int(b))
+        for s in range(len(DEFAULT_LIGHT)):
+            strips[s].setPixelColor(i, Color(r, g, b))
+    # print(str)
     c = (c + 1) % len(gradient)
+    for s in range(len(DEFAULT_LIGHT)):
+        strips[s].show()
     return c
 
 
@@ -105,6 +107,9 @@ if __name__ == "__main__":
         def callback(packet):
             if lights_check == True:
                 process_packet(packet)
+        @receiver.listen_on("availability")
+        def callback(universe, changed):
+            print(universe, changed)
 
         receiver.join_multicast(1)
 
