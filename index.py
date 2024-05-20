@@ -4,6 +4,7 @@ import sacn
 import time
 
 # Constants
+UNIVERSE = 1
 LIGHTS_SWITCH_BUTTON_PIN = 17
 LIGHTS_SWITCH_FADE_TIME = 0.3
 LED_COUNT = [18, 30, 7]
@@ -77,27 +78,6 @@ def process_packet(packet):
         strip.show()
 
 
-# def process_packet(packet):
-#     for i in range(sum(LED_COUNT)):
-#         try:
-#             r = packet.dmxData[i * 3]
-#             g = packet.dmxData[i * 3 + 1]
-#             b = packet.dmxData[i * 3 + 2]
-
-#             for strip_index in range(len(strips)):
-#                 if i < LED_COUNT[strip_index]:
-#                     strips[strip_index].setPixelColor(i, Color(r, g, b))
-#                     break
-#                 else:
-#                     i -= LED_COUNT[strip_index]
-
-#         except IndexError:
-#             pass
-
-#     for i in range(len(strips)):
-#         strips[i].show()
-
-
 def ease_in_out_quint(x):
     return 16 * x**5 if x < 0.5 else 1 - ((-2 * x + 2) ** 5) / 2
 
@@ -119,7 +99,7 @@ if __name__ == "__main__":
         receiver = sacn.sACNreceiver()
         receiver.start()
 
-        @receiver.listen_on("universe", universe=1)
+        @receiver.listen_on("universe", universe=UNIVERSE)
         def callback(packet):
             if lights_check:
                 process_packet(packet)
@@ -127,11 +107,13 @@ if __name__ == "__main__":
         @receiver.listen_on("availability")
         def availability_callback(universe, changed):
             global lights_check
-            if changed == "available":
-                lights_check = True
-            else:
-                lights_check = False
-                print(f"Universe {universe} is now {changed}")
+            if universe == UNIVERSE:
+                if changed == "available":
+                    lights_check = True
+                else:
+                    lights_check = False
+                    print(f"Universe {universe} is now {changed}")
+                fade_lights(lights_check)
 
         lights_check = True
         gradient_index = 0
