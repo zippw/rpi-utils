@@ -11,8 +11,12 @@ LED_PIN = [10, 21, 18]
 DEFAULT_LIGHT = [2]
 STEP = 10
 COLORS = [
-    [255, 113, 206], [185, 103, 255], [1, 205, 254],
-    [5, 255, 161], [255, 251, 250], [255, 113, 206]
+    [255, 113, 206],
+    [185, 103, 255],
+    [1, 205, 254],
+    [5, 255, 161],
+    [255, 251, 250],
+    [255, 113, 206],
 ]
 
 # GPIO setup
@@ -24,6 +28,7 @@ strips = [PixelStrip(LED_COUNT[i], LED_PIN[i]) for i in range(len(LED_COUNT))]
 for strip in strips:
     strip.begin()
 
+
 # Gradient generator
 def generate_gradient(colors, step):
     gradient = []
@@ -31,13 +36,17 @@ def generate_gradient(colors, step):
         gradient.append(colors[i])
         next_color = colors[(i + 1) % len(colors)]
         for j in range(1, step):
-            gradient.append([
-                round(colors[i][k] + ((next_color[k] - colors[i][k]) / step * j))
-                for k in range(3)
-            ])
+            gradient.append(
+                [
+                    round(colors[i][k] + ((next_color[k] - colors[i][k]) / step * j))
+                    for k in range(3)
+                ]
+            )
     return gradient
 
+
 gradient = generate_gradient(COLORS, STEP)
+
 
 def update_lights(gradient, index):
     for i in range(len(DEFAULT_LIGHT)):
@@ -47,18 +56,42 @@ def update_lights(gradient, index):
         strips[DEFAULT_LIGHT[i]].show()
     return (index + 1) % len(gradient)
 
+
+# def process_packet(packet):
+#     pixel_index = 0
+#     for strip_index, strip in enumerate(strips):
+#         for _ in range(LED_COUNT[strip_index]):
+#             if pixel_index * 3 + 2 < len(packet.dmxData):
+#                 r, g, b = packet.dmxData[pixel_index * 3 : pixel_index * 3 + 3]
+#                 strip.setPixelColor(pixel_index, Color(r, g, b))
+#             pixel_index += 1
+#         strip.show()
+
+
 def process_packet(packet):
-    pixel_index = 0
-    for strip_index, strip in enumerate(strips):
-        for _ in range(LED_COUNT[strip_index]):
-            if pixel_index * 3 + 2 < len(packet.dmxData):
-                r, g, b = packet.dmxData[pixel_index * 3: pixel_index * 3 + 3]
-                strip.setPixelColor(pixel_index, Color(r, g, b))
-            pixel_index += 1
-        strip.show()
+    for i in range(sum(LED_COUNT)):
+        try:
+            r = packet.dmxData[i * 3]
+            g = packet.dmxData[i * 3 + 1]
+            b = packet.dmxData[i * 3 + 2]
+
+            for strip_index in range(len(strips)):
+                if i < LED_COUNT[strip_index]:
+                    strips[strip_index].setPixelColor(i, Color(r, g, b))
+                    break
+                else:
+                    i -= LED_COUNT[strip_index]
+
+        except IndexError:
+            pass
+
+    for i in range(len(strips)):
+        strips[i].show()
+
 
 def ease_in_out_quint(x):
     return 16 * x**5 if x < 0.5 else 1 - ((-2 * x + 2) ** 5) / 2
+
 
 def fade_lights(on):
     for i in range(21):
@@ -69,6 +102,7 @@ def fade_lights(on):
                 strip.setBrightness(round(brightness))
                 strip.show()
         time.sleep(LIGHTS_SWITCH_FADE_TIME / 20)
+
 
 # Main loop
 if __name__ == "__main__":
