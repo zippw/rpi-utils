@@ -108,8 +108,13 @@ if __name__ == "__main__":
             if lights_check == True:
                 process_packet(packet)
         @receiver.listen_on("availability")
-        def callback(universe, changed):
-            print(universe, changed)
+        def callback(changed):
+            print(changed)
+            global lights_check
+            if (changed == "available"):
+                lights_check = True
+            else:
+                lights_check = False
 
         receiver.join_multicast(1)
 
