@@ -2,6 +2,7 @@ import time
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_SSD1306
 from PIL import Image, ImageDraw, ImageFont
+import random
 
 
 class OLEDController:
@@ -28,7 +29,7 @@ class OLEDController:
         try:
             while True:
                 self.draw.rectangle((0, 0, self.width, self.height), outline=0, fill=0)
-                self.draw.text((0, 0), "IP: ", font=self.font, fill=255)
+                self.draw.text((0, 0), "IP: {}".format(random.random()), font=self.font, fill=255)
                 self.disp.image(self.image.rotate(180))
                 self.disp.display()
                 time.sleep(0.1)
