@@ -6,7 +6,7 @@ import time
 
 class LightController:
     UNIVERSE = 1
-    LIGHTS_SWITCH_BUTTON_PIN = 17
+    # LIGHTS_SWITCH_BUTTON_PIN = 17
     LIGHTS_SWITCH_FADE_TIME = 0.3
     LED_COUNT = [18, 30, 7]
     LED_PIN = [10, 21, 18]
@@ -119,9 +119,9 @@ class LightController:
     def run(self):
         try:
             while True:
-                if GPIO.input(self.LIGHTS_SWITCH_BUTTON_PIN) == False:
-                    self.lights_check = not self.lights_check
-                    self.fade_lights(self.lights_check)
+                # if GPIO.input(self.LIGHTS_SWITCH_BUTTON_PIN) == False:
+                #     self.lights_check = not self.lights_check
+                #     self.fade_lights(self.lights_check)
 
                 if not self.lights_check:
                     self.gradient_index = self.update_lights(
