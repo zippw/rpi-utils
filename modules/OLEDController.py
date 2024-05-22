@@ -26,12 +26,12 @@ class OLEDController:
 
     def start_display_loop(self):
         try:
-            self.draw.text((0, 0), "IP: ", font=self.font, fill=255)
-            self.disp.image(self.image.rotate(180))
-            self.disp.display()
-            # while True:
-            #     self.draw.rectangle((0, 0, self.width, self.height), outline=0, fill=0)
-            #     time.sleep(0.1)
+            while True:
+                self.draw.rectangle((0, 0, self.width, self.height), outline=0, fill=0)
+                self.draw.text((0, 0), "IP: ", font=self.font, fill=255)
+                self.disp.image(self.image.rotate(180))
+                self.disp.display()
+                time.sleep(0.1)
         except KeyboardInterrupt:
             self.clear_display()
             print("Display loop stopped.")
