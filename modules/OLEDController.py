@@ -25,7 +25,7 @@ class OLEDController:
         self.disp.image(self.image.rotate(180))
         self.disp.display()
 
-    def start_display_loop(self):
+    def run(self):
         try:
             while True:
                 self.draw.rectangle((0, 0, self.width, self.height), outline=0, fill=0)

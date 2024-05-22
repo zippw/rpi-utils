@@ -123,7 +123,7 @@ class LightController:
                 # if GPIO.input(self.LIGHTS_SWITCH_BUTTON_PIN) == False:
                 #     self.lights_check = not self.lights_check
                 #     self.fade_lights(self.lights_check)
-
+a
                 if not self.lights_check:
                     self.gradient_index = self.update_lights(
                         self.gradient, self.gradient_index
