@@ -29,10 +29,7 @@ image = Image.new("1", (w, h)) # 1 - 1 bit color image
 draw = ImageDraw.Draw(image)
 draw.rectangle((0, 0, w, h), outline=0, fill=0) # blank rect
 font = ImageFont.load_default()
-
-# Alternatively load a TTF font.  Make sure the .ttf font file is in the same directory as the python script!
-# Some other nice fonts to try: http://www.dafont.com/bitmap.php
-# font = ImageFont.truetype('Minecraftia.ttf', 8)
+font = ImageFont.truetype('Vermin_Vibes_1989.ttf', 8) # http://www.dafont.com/bitmap.php
 
 while True:
     draw.rectangle((0, 0, w, h), outline=0, fill=0) # blank rect
