@@ -28,9 +28,9 @@ class LightController:
         self.gradient_index = 0
 
         # GPIO setup
-        GPIO.setmode(GPIO.BCM)
+        # GPIO.setmode(GPIO.BCM)
         # GPIO.setup(self.LIGHTS_SWITCH_BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.setup(GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        # GPIO.setup(GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
         # Setup PixelStrips
         self.strips = [
