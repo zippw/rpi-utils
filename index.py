@@ -150,9 +150,9 @@ if __name__ == "__main__":
     light_controller = LightController()
 
     try:
-        oled_controller.update_display()
         while True:
 
+            oled_controller.update_display()
             if not light_controller.lights_check:
                 light_controller.gradient_index = light_controller.update_lights(
                     light_controller.gradient, light_controller.gradient_index
