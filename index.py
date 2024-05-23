@@ -40,6 +40,15 @@ class OLEDController:
         self.draw.rectangle((0, 0, self.width, self.height), outline=0, fill=0)
         self.image.paste(self.frames[self.current_frame], (0, 0))
 
+        pm2_processes = get_pm2_processes()
+
+        for i, process in pm2_processes:
+            print(process)
+            self.draw.text((0, i * 32), f"{process['name']}")
+            # print(
+            #     f"Name: {process['name']}, Status: {process['pm2_env']['status']}, PID: {process['pid']}"
+            # )
+            
         self.disp.image(self.image.rotate(180))
         self.disp.display()
         self.current_frame = (self.current_frame + 1) % len(self.frames)
@@ -168,16 +177,6 @@ def get_pm2_processes():
     processes = json.loads(result.stdout)
     return processes
 
-
-# Получение списка запущенных процессов
-pm2_processes = get_pm2_processes()
-
-# Вывод списка процессов
-for process in pm2_processes:
-    print(process)
-    # print(
-    #     f"Name: {process['name']}, Status: {process['pm2_env']['status']}, PID: {process['pid']}"
-    # )
 
 if __name__ == "__main__":
     oled_controller = OLEDController()
