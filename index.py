@@ -38,7 +38,7 @@ class OLEDController:
 
     def update_display(self):
         self.draw.rectangle((0, 0, self.width, self.height), outline=0, fill=0)
-        # self.image.paste(self.frames[self.current_frame], (0, 0))
+        self.image.paste(self.frames[self.current_frame], (0, 0))
 
         pm2_processes = get_pm2_processes()
 
@@ -46,16 +46,12 @@ class OLEDController:
             max_id_len = max(len(str(process["pm_id"])) for process in pm2_processes)
 
             for i, process in enumerate(pm2_processes):
-                print(f"| {str(process['pm_id'])[:max_id_len]:<{max_id_len}} | {process['name'][:10]:<10} |")
                 self.draw.text(
-                    (0, i * 8),
+                    (0, 8 + i * 8),
                     f"| {str(process['pm_id'])[:max_id_len]:<{max_id_len}} | {process['name'][:10]:<10} |",
                     font=self.font,
                     fill=255,
                 )
-            # print(
-            #     f"Name: {process['name']}, Status: {process['pm2_env']['status']}, PID: {process['pid']}"
-            # )
 
         self.disp.image(self.image.rotate(180))
         self.disp.display()
