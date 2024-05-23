@@ -22,7 +22,7 @@ class OLEDController:
         self.height = self.disp.height
         self.image = Image.new("1", (self.width, self.height))  # 1 - 1 bit color image
         self.draw = ImageDraw.Draw(self.image)
-        self.font = ImageFont.truetype('assets/Consolas.ttf', 8)
+        self.font = ImageFont.truetype("assets/Consolas.ttf", 8)
 
         self.frames = []
         for i in range(2):
@@ -43,9 +43,14 @@ class OLEDController:
         pm2_processes = get_pm2_processes()
 
         for i, process in enumerate(pm2_processes):
-            print(i * 32)
+            max_id_len = max(len(process["pm_id"]) for process in pm2_processes)
             self.draw.text(
-                (0, i * 32), "{}".format(process["name"]), font=self.font, fill=255
+                (0, i * 32),
+                "| {pm_id:<{max_len}} | {name:<10} | ".format(
+                    pm_id=process["pm_id"], max_len=max_id_len, name=process["name"]
+                ),
+                font=self.font,
+                fill=255,
             )
             # print(
             #     f"Name: {process['name']}, Status: {process['pm2_env']['status']}, PID: {process['pid']}"
