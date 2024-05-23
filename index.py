@@ -31,7 +31,7 @@ class OLEDController:
     def update_display(self):
         self.draw.rectangle((0, 0, self.width, self.height), outline=0, fill=0)
         self.draw.text(
-            (0, 0), "IP: {}".format(random.random()), font=self.font, fill=100
+            (0, 0), "IP: {}".format(random.random()), font=self.font, fill=255
         )
         self.disp.image(self.image.rotate(180))
         self.disp.display()
