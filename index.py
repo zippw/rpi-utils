@@ -45,6 +45,12 @@ class OLEDController:
         for i, process in enumerate(pm2_processes):
             max_id_len = max(len(str(process["pm_id"])) for process in pm2_processes)
 
+            self.draw.text(
+                (0, 0),
+                f"| {str("id")[:max_id_len]:<{max_id_len}} | {"name"[:10]:<10} |",
+                font=self.font,
+                fill=255,
+            )
             for i, process in enumerate(pm2_processes):
                 self.draw.text(
                     (0, 8 + i * 8),
