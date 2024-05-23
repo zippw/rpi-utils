@@ -22,7 +22,7 @@ class OLEDController:
         self.height = self.disp.height
         self.image = Image.new("1", (self.width, self.height))  # 1 - 1 bit color image
         self.draw = ImageDraw.Draw(self.image)
-        self.font = ImageFont.load_default(size=32)
+        self.font = ImageFont.truetype('assets/Consolas.ttf', 8)
 
         self.frames = []
         for i in range(2):
