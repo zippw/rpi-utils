@@ -156,7 +156,7 @@ if __name__ == "__main__":
                 light_controller.gradient_index = light_controller.update_lights(
                     light_controller.gradient, light_controller.gradient_index
                 )
-            time.sleep(0.1)
+            # time.sleep(0.1)
 
     except KeyboardInterrupt:
         oled_controller.clear_display()
