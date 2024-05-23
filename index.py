@@ -31,7 +31,7 @@ class OLEDController:
     def update_display(self):
         self.draw.rectangle((0, 0, self.width, self.height), outline=0, fill=0)
         self.draw.text(
-            (0, 0), "IP: {}".format(random.random()), font=self.font, fill=255
+            (0, 0), "IP: {}".format(random.random()), font=self.font, fill=100
         )
         self.disp.image(self.image.rotate(180))
         self.disp.display()
@@ -151,7 +151,6 @@ if __name__ == "__main__":
 
     try:
         while True:
-
             oled_controller.update_display()
             if not light_controller.lights_check:
                 light_controller.gradient_index = light_controller.update_lights(
