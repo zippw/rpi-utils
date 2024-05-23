@@ -7,6 +7,7 @@ import RPi.GPIO as GPIO
 import sacn
 import subprocess
 import json
+import datetime from datetime
 
 
 class OLEDController:
@@ -30,16 +31,15 @@ class OLEDController:
             self.frames.append(frame)
 
         self.current_frame = 0
+        self.slides = [self.show_pm2, self.show_time]
+        self.current_slide = 0
 
     def clear_display(self):
         self.draw.rectangle((0, 0, self.width, self.height), outline=0, fill=0)
         self.disp.image(self.image.rotate(180))
         self.disp.display()
 
-    def update_display(self):
-        self.draw.rectangle((0, 0, self.width, self.height), outline=0, fill=0)
-        self.image.paste(self.frames[self.current_frame], (0, 0))
-
+    def show_pm2(self):
         pm2_processes = get_pm2_processes()
 
         for i, process in enumerate(pm2_processes):
@@ -72,8 +72,18 @@ class OLEDController:
                     fill=255,
                 )
 
+    def show_time(self):
+        self.draw.text((0, 8), datetime.now().strftime("%H:%M"), font=self.font, fill=255)
+
+    def update_display(self):
+        self.draw.rectangle((0, 0, self.width, self.height), outline=0, fill=0)
+        self.image.paste(self.frames[self.current_frame], (0, 0))
+
+        self.slides[self.current_slide]()
+
         self.disp.image(self.image.rotate(180))
         self.disp.display()
+        self.current_slide = (self.current_slide + 1) % len(self.slides)
         # self.current_frame = (self.current_frame + 1) % len(self.frames)
 
 
@@ -82,7 +92,7 @@ class LightController:
     LIGHTS_SWITCH_FADE_TIME = 0.3
     LED_COUNT = [18, 30, 7]
     LED_PIN = [10, 21, 18]
-    DEFAULT_LIGHT = [2]
+    # DEFAULT_LIGHT = [2]
     STEP = 10
     COLORS = [
         [255, 0, 4],
@@ -179,21 +189,19 @@ class LightController:
             ease_value = self.ease_in_out_quint(i / 20)
             brightness = 255 * ease_value if on else 255 - (255 * ease_value)
             for strip in self.strips:
-                if self.strips.index(strip) not in self.DEFAULT_LIGHT:
-                    strip.setBrightness(round(brightness))
-                    strip.show()
+                # if self.strips.index(strip) not in self.DEFAULT_LIGHT:
+                strip.setBrightness(round(brightness))
+                strip.show()
             time.sleep(self.LIGHTS_SWITCH_FADE_TIME / 20)
 
 
 def get_pm2_processes():
-    # Выполнение команды `pm2 jlist` для получения списка процессов в формате JSON
     result = subprocess.run(
         ["pm2", "jlist"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
     )
 
-    # Проверка на наличие ошибок
     if result.returncode != 0:
-        print(f"Ошибка выполнения команды pm2: {result.stderr}")
+        print(f"pm2 cmd error: {result.stderr}")
         return []
 
     # Парсинг JSON-ответа
@@ -208,11 +216,11 @@ if __name__ == "__main__":
     try:
         while True:
             oled_controller.update_display()
-            if not light_controller.lights_check:
-                light_controller.gradient_index = light_controller.update_lights(
-                    light_controller.gradient, light_controller.gradient_index
-                )
-            # time.sleep(0.1)
+            # if not light_controller.lights_check:
+            #     light_controller.gradient_index = light_controller.update_lights(
+            #         light_controller.gradient, light_controller.gradient_index
+            #     )
+            time.sleep(5)
 
     except KeyboardInterrupt:
         oled_controller.clear_display()
