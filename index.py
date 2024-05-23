@@ -47,7 +47,7 @@ class OLEDController:
 
             self.draw.text(
                 (0, 0),
-                f"| {str("id")[:max_id_len]:<{max_id_len}} | {"name"[:10]:<10} |",
+                f"| {"id"[:max_id_len]:<{max_id_len}} | {"name"[:10]:<10} |",
                 font=self.font,
                 fill=255,
             )
