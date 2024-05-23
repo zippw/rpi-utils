@@ -174,9 +174,10 @@ pm2_processes = get_pm2_processes()
 
 # Вывод списка процессов
 for process in pm2_processes:
-    print(
-        f"Name: {process['name']}, Status: {process['pm2_env']['status']}, PID: {process['pid']}"
-    )
+    print(process)
+    # print(
+    #     f"Name: {process['name']}, Status: {process['pm2_env']['status']}, PID: {process['pid']}"
+    # )
 
 if __name__ == "__main__":
     oled_controller = OLEDController()
