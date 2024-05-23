@@ -44,11 +44,13 @@ class OLEDController:
 
         for i, process in enumerate(pm2_processes):
             print(i * 32)
-            self.draw.text((0, i * 32), "{}".format(process['name']))
+            self.draw.text(
+                (0, i * 32), "{}".format(process["name"]), font=self.font, fill=255
+            )
             # print(
             #     f"Name: {process['name']}, Status: {process['pm2_env']['status']}, PID: {process['pid']}"
             # )
-            
+
         self.disp.image(self.image.rotate(180))
         self.disp.display()
         # self.current_frame = (self.current_frame + 1) % len(self.frames)
