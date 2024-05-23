@@ -7,7 +7,7 @@ import RPi.GPIO as GPIO
 import sacn
 import subprocess
 import json
-import datetime from datetime
+from datetime import datetime
 
 
 class OLEDController:
