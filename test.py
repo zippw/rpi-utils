@@ -1,8 +1,7 @@
 from PIL import Image
 
 # Загрузка изображения
-image_path = 'assets/frame.png'  # Укажите путь к вашему изображению
-image = Image.open(image_path)
+image = Image.open('assets/frame.png')
 
 # Конвертация изображения в 1-битный режим
 image_1bit = image.convert('1')

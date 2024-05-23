@@ -22,6 +22,7 @@ class OLEDController:
         self.image = Image.new("1", (self.width, self.height))  # 1 - 1 bit color image
         self.draw = ImageDraw.Draw(self.image)
         self.font = ImageFont.load_default()
+        self.frame_image = Image.open('assets/frame.png').convert('1')
 
     def clear_display(self):
         self.draw.rectangle((0, 0, self.width, self.height), outline=0, fill=0)
@@ -29,7 +30,8 @@ class OLEDController:
         self.disp.display()
 
     def update_display(self):
-        self.draw.rectangle((0, 0, self.width, self.height), outline=0, fill=0)
+        # self.draw.rectangle((0, 0, self.width, self.height), outline=0, fill=0)
+        self.image.paste(self.frame_image, (0, 0))
         self.draw.text(
             (0, 0), "IP: {}".format(random.random()), font=self.font, fill=255
         )
