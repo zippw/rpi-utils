@@ -62,7 +62,7 @@ class OLEDController:
 
         self.disp.image(self.image.rotate(180))
         self.disp.display()
-        self.current_frame = (self.current_frame + 1) % len(self.frames)
+        # self.current_frame = (self.current_frame + 1) % len(self.frames)
 
 
 class LightController:
