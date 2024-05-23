@@ -2,10 +2,11 @@ import time
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_SSD1306
 from PIL import Image, ImageDraw, ImageFont
-import random
 from rpi_ws281x import Color, PixelStrip
 import RPi.GPIO as GPIO
 import sacn
+import subprocess
+import json
 
 
 class OLEDController:
@@ -25,7 +26,7 @@ class OLEDController:
 
         self.frames = []
         for i in range(2):
-            frame = Image.open(f'assets/frame{i}.png').convert('1')
+            frame = Image.open(f"assets/frame{i}.png").convert("1")
             self.frames.append(frame)
 
         self.current_frame = 0
@@ -38,7 +39,7 @@ class OLEDController:
     def update_display(self):
         self.draw.rectangle((0, 0, self.width, self.height), outline=0, fill=0)
         self.image.paste(self.frames[self.current_frame], (0, 0))
-        
+
         self.disp.image(self.image.rotate(180))
         self.disp.display()
         self.current_frame = (self.current_frame + 1) % len(self.frames)
@@ -151,6 +152,31 @@ class LightController:
                     strip.show()
             time.sleep(self.LIGHTS_SWITCH_FADE_TIME / 20)
 
+
+def get_pm2_processes():
+    # Выполнение команды `pm2 jlist` для получения списка процессов в формате JSON
+    result = subprocess.run(
+        ["pm2", "jlist"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
+    )
+
+    # Проверка на наличие ошибок
+    if result.returncode != 0:
+        print(f"Ошибка выполнения команды pm2: {result.stderr}")
+        return []
+
+    # Парсинг JSON-ответа
+    processes = json.loads(result.stdout)
+    return processes
+
+
+# Получение списка запущенных процессов
+pm2_processes = get_pm2_processes()
+
+# Вывод списка процессов
+for process in pm2_processes:
+    print(
+        f"Name: {process['name']}, Status: {process['pm2_env']['status']}, PID: {process['pid']}"
+    )
 
 if __name__ == "__main__":
     oled_controller = OLEDController()
