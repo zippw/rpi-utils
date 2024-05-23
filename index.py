@@ -22,7 +22,13 @@ class OLEDController:
         self.image = Image.new("1", (self.width, self.height))  # 1 - 1 bit color image
         self.draw = ImageDraw.Draw(self.image)
         self.font = ImageFont.load_default()
-        self.frame_image = Image.open('assets/frame.png').convert('1')
+
+        self.frames = []
+        for i in range(2):
+            frame = Image.open(f'assets/frame{i}.png').convert('1')
+            self.frames.append(frame)
+
+        self.current_frame = 0
 
     def clear_display(self):
         self.draw.rectangle((0, 0, self.width, self.height), outline=0, fill=0)
@@ -30,13 +36,12 @@ class OLEDController:
         self.disp.display()
 
     def update_display(self):
-        # self.draw.rectangle((0, 0, self.width, self.height), outline=0, fill=0)
-        self.image.paste(self.frame_image, (0, 0))
-        self.draw.text(
-            (0, 0), "IP: {}".format(random.random()), font=self.font, fill=255
-        )
+        self.draw.rectangle((0, 0, self.width, self.height), outline=0, fill=0)
+        self.image.paste(self.frames[self.current_frame], (0, 0))
+        
         self.disp.image(self.image.rotate(180))
         self.disp.display()
+        self.current_frame = (self.current_frame + 1) % len(self.frames)
 
 
 class LightController:
@@ -152,8 +157,8 @@ if __name__ == "__main__":
     light_controller = LightController()
 
     try:
-        oled_controller.update_display()
         while True:
+            oled_controller.update_display()
             if not light_controller.lights_check:
                 light_controller.gradient_index = light_controller.update_lights(
                     light_controller.gradient, light_controller.gradient_index
