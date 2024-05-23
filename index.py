@@ -43,7 +43,7 @@ class OLEDController:
         pm2_processes = get_pm2_processes()
 
         for i, process in enumerate(pm2_processes):
-            # print(process)
+            print(i, process['name'])
             self.draw.text((0, i * 32), f"{process['name']}")
             # print(
             #     f"Name: {process['name']}, Status: {process['pm2_env']['status']}, PID: {process['pid']}"
