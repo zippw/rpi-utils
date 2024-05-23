@@ -38,7 +38,7 @@ class OLEDController:
 
     def update_display(self):
         self.draw.rectangle((0, 0, self.width, self.height), outline=0, fill=0)
-        self.image.paste(self.frames[self.current_frame], (0, 0))
+        # self.image.paste(self.frames[self.current_frame], (0, 0))
 
         pm2_processes = get_pm2_processes()
 
