@@ -1,0 +1,160 @@
+03/01/24 19:46:41 [DEBUG] HW revision: C
+03/01/24 19:46:41 [DEBUG] Auto detected COM port: /dev/ttyACM0
+03/01/24 19:46:41 [INFO] Display reset (COM port may change)...
+03/01/24 19:46:56 [DEBUG] Static COM port: /dev/ttyACM0
+03/01/24 19:46:56 [WARNING] Display returned unknown sub-revision on Hello answer (b'chs_5inch.dev1_rom1.88\x00')
+03/01/24 19:46:56 [DEBUG] HW sub-revision: SubRevision.UNKNOWN
+03/01/24 20:00:27 [DEBUG] HW revision: C
+03/01/24 20:00:27 [DEBUG] Auto detected COM port: /dev/ttyACM0
+03/01/24 20:00:27 [INFO] Display reset (COM port may change)...
+03/01/24 20:00:42 [DEBUG] Static COM port: /dev/ttyACM0
+03/01/24 20:00:42 [WARNING] Display returned unknown sub-revision on Hello answer (b'chs_5inch.dev1_rom1.88\x00')
+03/01/24 20:00:42 [DEBUG] HW sub-revision: SubRevision.UNKNOWN
+03/01/24 20:02:20 [DEBUG] HW revision: C
+03/01/24 20:02:21 [DEBUG] Auto detected COM port: /dev/ttyACM0
+03/01/24 20:02:21 [INFO] Display reset (COM port may change)...
+03/01/24 20:02:36 [DEBUG] Static COM port: /dev/ttyACM0
+03/01/24 20:02:36 [WARNING] Display returned unknown sub-revision on Hello answer (b'chs_5inch.dev1_rom1.88\x00')
+03/01/24 20:02:36 [DEBUG] HW sub-revision: SubRevision.UNKNOWN
+03/01/24 20:05:13 [DEBUG] HW revision: C
+03/01/24 20:05:13 [DEBUG] Auto detected COM port: /dev/ttyACM0
+03/01/24 20:05:13 [INFO] Display reset (COM port may change)...
+03/01/24 20:05:28 [DEBUG] Static COM port: /dev/ttyACM0
+03/01/24 20:05:28 [WARNING] Display returned unknown sub-revision on Hello answer (b'chs_5inch.dev1_rom1.88\x00')
+03/01/24 20:05:28 [DEBUG] HW sub-revision: SubRevision.UNKNOWN
+03/01/24 20:05:59 [DEBUG] HW revision: C
+03/01/24 20:05:59 [DEBUG] Auto detected COM port: /dev/ttyACM0
+03/01/24 20:05:59 [INFO] Display reset (COM port may change)...
+03/01/24 20:06:14 [DEBUG] Static COM port: /dev/ttyACM0
+03/01/24 20:06:14 [WARNING] Display returned unknown sub-revision on Hello answer (b'chs_5inch.dev1_rom1.88\x00')
+03/01/24 20:06:14 [DEBUG] HW sub-revision: SubRevision.UNKNOWN
+03/01/24 20:08:19 [DEBUG] HW revision: C
+03/01/24 20:08:19 [DEBUG] Auto detected COM port: /dev/ttyACM0
+03/01/24 20:08:19 [INFO] Display reset (COM port may change)...
+03/01/24 20:08:34 [DEBUG] Static COM port: /dev/ttyACM0
+03/01/24 20:08:34 [WARNING] Display returned unknown sub-revision on Hello answer (b'chs_5inch.dev1_rom1.88\x00')
+03/01/24 20:08:34 [DEBUG] HW sub-revision: SubRevision.UNKNOWN
+03/01/24 20:11:23 [DEBUG] HW revision: C
+03/01/24 20:11:23 [DEBUG] Auto detected COM port: /dev/ttyACM0
+03/01/24 20:11:23 [INFO] Display reset (COM port may change)...
+03/01/24 20:11:38 [DEBUG] Static COM port: /dev/ttyACM0
+03/01/24 20:11:38 [WARNING] Display returned unknown sub-revision on Hello answer (b'chs_5inch.dev1_rom1.88\x00')
+03/01/24 20:11:38 [DEBUG] HW sub-revision: SubRevision.UNKNOWN
+03/01/24 20:14:10 [DEBUG] HW revision: C
+03/01/24 20:14:11 [DEBUG] Auto detected COM port: /dev/ttyACM0
+03/01/24 20:14:11 [INFO] Display reset (COM port may change)...
+03/01/24 20:14:26 [DEBUG] Static COM port: /dev/ttyACM0
+03/01/24 20:14:26 [WARNING] Display returned unknown sub-revision on Hello answer (b'chs_5inch.dev1_rom1.88\x00')
+03/01/24 20:14:26 [DEBUG] HW sub-revision: SubRevision.UNKNOWN
+03/01/24 20:18:28 [DEBUG] HW revision: C
+03/01/24 20:18:28 [DEBUG] Auto detected COM port: /dev/ttyACM0
+03/01/24 20:18:28 [INFO] Display reset (COM port may change)...
+03/01/24 20:18:43 [DEBUG] Static COM port: /dev/ttyACM0
+03/01/24 20:18:43 [WARNING] Display returned unknown sub-revision on Hello answer (b'chs_5inch.dev1_rom1.88\x00')
+03/01/24 20:18:43 [DEBUG] HW sub-revision: SubRevision.UNKNOWN
+03/01/24 20:18:59 [DEBUG] HW revision: C
+03/01/24 20:18:59 [DEBUG] Auto detected COM port: /dev/ttyACM0
+03/01/24 20:18:59 [INFO] Display reset (COM port may change)...
+03/01/24 20:19:14 [DEBUG] Static COM port: /dev/ttyACM0
+03/01/24 20:19:14 [WARNING] Display returned unknown sub-revision on Hello answer (b'chs_5inch.dev1_rom1.88\x00')
+03/01/24 20:19:14 [DEBUG] HW sub-revision: SubRevision.UNKNOWN
+03/01/24 20:20:52 [DEBUG] HW revision: C
+03/01/24 20:20:52 [DEBUG] Auto detected COM port: /dev/ttyACM0
+03/01/24 20:20:52 [INFO] Display reset (COM port may change)...
+03/01/24 20:21:07 [DEBUG] Static COM port: /dev/ttyACM0
+03/01/24 20:21:07 [WARNING] Display returned unknown sub-revision on Hello answer (b'chs_5inch.dev1_rom1.88\x00')
+03/01/24 20:21:07 [DEBUG] HW sub-revision: SubRevision.UNKNOWN
+03/01/24 20:22:06 [DEBUG] HW revision: C
+03/01/24 20:22:06 [DEBUG] Auto detected COM port: /dev/ttyACM0
+03/01/24 20:22:06 [INFO] Display reset (COM port may change)...
+03/01/24 20:22:21 [DEBUG] Static COM port: /dev/ttyACM0
+03/01/24 20:22:21 [WARNING] Display returned unknown sub-revision on Hello answer (b'chs_5inch.dev1_rom1.88\x00')
+03/01/24 20:22:21 [DEBUG] HW sub-revision: SubRevision.UNKNOWN
+03/01/24 20:38:35 [DEBUG] HW revision: C
+03/01/24 20:38:35 [DEBUG] Auto detected COM port: /dev/ttyACM0
+03/01/24 20:38:35 [INFO] Display reset (COM port may change)...
+03/01/24 20:38:50 [DEBUG] Static COM port: /dev/ttyACM0
+03/01/24 20:38:50 [WARNING] Display returned unknown sub-revision on Hello answer (b'chs_5inch.dev1_rom1.88\x00')
+03/01/24 20:38:50 [DEBUG] HW sub-revision: SubRevision.UNKNOWN
+03/01/24 20:40:52 [DEBUG] HW revision: C
+03/01/24 20:40:52 [DEBUG] Auto detected COM port: /dev/ttyACM0
+03/01/24 20:40:52 [INFO] Display reset (COM port may change)...
+03/01/24 20:41:07 [DEBUG] Static COM port: /dev/ttyACM0
+03/01/24 20:41:07 [WARNING] Display returned unknown sub-revision on Hello answer (b'chs_5inch.dev1_rom1.88\x00')
+03/01/24 20:41:07 [DEBUG] HW sub-revision: SubRevision.UNKNOWN
+03/01/24 20:41:33 [DEBUG] HW revision: C
+03/01/24 20:41:33 [DEBUG] Auto detected COM port: /dev/ttyACM0
+03/01/24 20:41:33 [INFO] Display reset (COM port may change)...
+03/01/24 20:41:48 [DEBUG] Static COM port: /dev/ttyACM0
+03/01/24 20:41:48 [WARNING] Display returned unknown sub-revision on Hello answer (b'chs_5inch.dev1_rom1.88\x00')
+03/01/24 20:41:48 [DEBUG] HW sub-revision: SubRevision.UNKNOWN
+03/01/24 20:42:29 [DEBUG] HW revision: C
+03/01/24 20:42:29 [DEBUG] Auto detected COM port: /dev/ttyACM0
+03/01/24 20:42:29 [INFO] Display reset (COM port may change)...
+03/01/24 20:42:44 [DEBUG] Static COM port: /dev/ttyACM0
+03/01/24 20:42:45 [WARNING] Display returned unknown sub-revision on Hello answer (b'')
+03/01/24 20:42:45 [DEBUG] HW sub-revision: SubRevision.UNKNOWN
+03/01/24 20:42:53 [DEBUG] HW revision: C
+03/01/24 20:42:53 [DEBUG] Auto detected COM port: /dev/ttyACM0
+03/01/24 20:42:53 [INFO] Display reset (COM port may change)...
+03/01/24 20:43:08 [DEBUG] Static COM port: /dev/ttyACM0
+03/01/24 20:43:08 [WARNING] Display returned unknown sub-revision on Hello answer (b'chs_5inch.dev1_rom1.88\x00')
+03/01/24 20:43:08 [DEBUG] HW sub-revision: SubRevision.UNKNOWN
+03/01/24 20:48:19 [DEBUG] HW revision: C
+03/01/24 20:48:19 [DEBUG] Auto detected COM port: /dev/ttyACM0
+03/01/24 20:48:19 [INFO] Display reset (COM port may change)...
+03/01/24 20:48:34 [DEBUG] Static COM port: /dev/ttyACM0
+03/01/24 20:48:34 [WARNING] Display returned unknown sub-revision on Hello answer (b'chs_5inch.dev1_rom1.88\x00')
+03/01/24 20:48:34 [DEBUG] HW sub-revision: SubRevision.UNKNOWN
+03/01/24 20:51:40 [DEBUG] HW revision: C
+03/01/24 20:51:40 [DEBUG] Auto detected COM port: /dev/ttyACM0
+03/01/24 20:51:40 [INFO] Display reset (COM port may change)...
+03/01/24 20:51:55 [DEBUG] Static COM port: /dev/ttyACM0
+03/01/24 20:51:55 [WARNING] Display returned unknown sub-revision on Hello answer (b'chs_5inch.dev1_rom1.88\x00')
+03/01/24 20:51:55 [DEBUG] HW sub-revision: SubRevision.UNKNOWN
+03/02/24 11:27:58 [DEBUG] HW revision: C
+03/02/24 11:27:58 [DEBUG] Auto detected COM port: /dev/ttyACM0
+03/02/24 11:27:58 [INFO] Display reset (COM port may change)...
+03/02/24 11:28:13 [DEBUG] Static COM port: /dev/ttyACM0
+03/02/24 11:28:13 [WARNING] Display returned unknown sub-revision on Hello answer (b'chs_5inch.dev1_rom1.88\x00')
+03/02/24 11:28:13 [DEBUG] HW sub-revision: SubRevision.UNKNOWN
+03/02/24 11:33:52 [DEBUG] HW revision: C
+03/02/24 11:33:52 [DEBUG] Auto detected COM port: /dev/ttyACM0
+03/02/24 11:33:52 [INFO] Display reset (COM port may change)...
+03/02/24 11:34:01 [DEBUG] HW revision: C
+03/02/24 11:34:01 [ERROR] Cannot find COM port automatically, please run Configuration again and select COM port manually
+03/02/24 11:34:07 [DEBUG] HW revision: C
+03/02/24 11:34:07 [DEBUG] Auto detected COM port: /dev/ttyACM0
+03/02/24 11:34:07 [INFO] Display reset (COM port may change)...
+03/02/24 11:34:22 [DEBUG] Static COM port: /dev/ttyACM0
+03/02/24 11:34:22 [WARNING] Display returned unknown sub-revision on Hello answer (b'chs_5inch.dev1_rom1.88\x00')
+03/02/24 11:34:22 [DEBUG] HW sub-revision: SubRevision.UNKNOWN
+03/02/24 11:34:22 [DEBUG] Bitmap res/backgrounds/screen.png is now loaded in the cache
+03/02/24 11:35:07 [DEBUG] HW revision: C
+03/02/24 11:35:07 [DEBUG] Auto detected COM port: /dev/ttyACM0
+03/02/24 11:35:07 [INFO] Display reset (COM port may change)...
+03/02/24 11:35:22 [DEBUG] Static COM port: /dev/ttyACM0
+03/02/24 11:35:22 [WARNING] Display returned unknown sub-revision on Hello answer (b'chs_5inch.dev1_rom1.88\x00')
+03/02/24 11:35:22 [DEBUG] HW sub-revision: SubRevision.UNKNOWN
+03/02/24 11:35:22 [DEBUG] Bitmap ./res/backgrounds/screen.png is now loaded in the cache
+03/02/24 11:39:19 [DEBUG] HW revision: C
+03/02/24 11:39:19 [DEBUG] Auto detected COM port: /dev/ttyACM0
+03/02/24 11:39:19 [INFO] Display reset (COM port may change)...
+03/02/24 11:39:34 [DEBUG] Static COM port: /dev/ttyACM0
+03/02/24 11:39:34 [WARNING] Display returned unknown sub-revision on Hello answer (b'chs_5inch.dev1_rom1.88\x00')
+03/02/24 11:39:34 [DEBUG] HW sub-revision: SubRevision.UNKNOWN
+03/02/24 11:39:34 [DEBUG] Bitmap /home/zw/rpi-utils/monitor/res/background/screen.png is now loaded in the cache
+03/02/24 11:42:01 [DEBUG] HW revision: C
+03/02/24 11:42:01 [DEBUG] Auto detected COM port: /dev/ttyACM0
+03/02/24 11:42:01 [INFO] Display reset (COM port may change)...
+03/02/24 11:42:16 [DEBUG] Static COM port: /dev/ttyACM0
+03/02/24 11:42:16 [WARNING] Display returned unknown sub-revision on Hello answer (b'chs_5inch.dev1_rom1.88\x00')
+03/02/24 11:42:16 [DEBUG] HW sub-revision: SubRevision.UNKNOWN
+03/02/24 11:42:16 [DEBUG] Bitmap /home/zw/rpi-utils/monitor/res/background/screen.png is now loaded in the cache
+03/02/24 11:42:37 [DEBUG] HW revision: C
+03/02/24 11:42:37 [DEBUG] Auto detected COM port: /dev/ttyACM0
+03/02/24 11:42:37 [INFO] Display reset (COM port may change)...
+03/02/24 11:42:52 [DEBUG] Static COM port: /dev/ttyACM0
+03/02/24 11:42:52 [WARNING] Display returned unknown sub-revision on Hello answer (b'chs_5inch.dev1_rom1.88\x00')
+03/02/24 11:42:52 [DEBUG] HW sub-revision: SubRevision.UNKNOWN
+03/02/24 11:42:52 [DEBUG] Bitmap /home/zw/rpi-utils/monitor/res/background/1.png is now loaded in the cache

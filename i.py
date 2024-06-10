@@ -1,49 +1,72 @@
 import time
+import threading
+import psutil
+import subprocess
+import re
 
 
-# Gradient generator
-step = 10
+def get_time():
+    return time.strftime("%H:%M:%S")
 
 
-def stepped(c1, c2, i):
-    return round(c1 + ((c2 - c1) / step * i))
+def get_temperature():
+    try:
+        output = subprocess.check_output(["sensors"], encoding="utf-8")
+        temp_pattern = re.compile(r"temp\d+:\s+\+([\d\.]+)°C")
+        temperatures = temp_pattern.findall(output)
+        return f"{temperatures[0]}°C" if temperatures else "N/A"
+    except subprocess.CalledProcessError as e:
+        print(f"Failed to get temperature: {e}")
+        return "N/A"
 
 
-colors = [
-    [255, 113, 206],
-    [185, 103, 255],
-    [1, 205, 254],
-    [5, 255, 161],
-    [255, 251, 250],
-    [255, 113, 206],
-]
-gradient = []
-for i in range(len(colors)):
-    gradient.append(colors[i])
-    n = (i + 1) % len(colors)
-    for j in range(1, step):
-        gradient.append(
-            [
-                stepped(colors[i][0], colors[n][0], j),
-                stepped(colors[i][1], colors[n][1], j),
-                stepped(colors[i][2], colors[n][2], j),
-            ]
-        )
-
-lenta = gradient[slice(0, 7)]
+def get_cpu_usage():
+    return f"{psutil.cpu_percent(interval=1)}%"
 
 
-def gen_gradient(gradient, c):
-    str = "\x1B[0;0H\x1B[0J"
-    for i in range(len(lenta)):
-        r, g, b = gradient[(c + i) % len(gradient)]
-        str += "\x1B[48;2;{};{};{}m  \x1B[0m".format(int(r), int(g), int(b))
-    print(str)
-    c = (c + 1) % len(gradient)
-    return c
+def get_memory_usage():
+    return f"{psutil.virtual_memory().percent}%"
 
 
-c = 0
-while True:
-    c = gen_gradient(gradient, c)
-    time.sleep(0.05)
+results = {
+    "time": "N/A",
+    "temperature": "N/A",
+    "cpu_usage": "N/A",
+    "memory_usage": "N/A",
+}
+
+
+def update_display():
+    print(
+        f"{results['time']}\n{results['temperature']}\n{results['cpu_usage']}\n{results['memory_usage']}"
+    )
+
+
+def updater(func, key, interval):
+    while True:
+        results[key] = func()
+        time.sleep(interval)
+
+
+def main():
+    threads = [
+        threading.Thread(target=updater, args=(get_time, "time", 1)),
+        threading.Thread(target=updater, args=(get_temperature, "temperature", 5)),
+        threading.Thread(target=updater, args=(get_cpu_usage, "cpu_usage", 1)),
+        threading.Thread(target=updater, args=(get_memory_usage, "memory_usage", 1)),
+    ]
+
+    for thread in threads:
+        thread.daemon = True
+        thread.start()
+
+    try:
+        while True:
+            update_display()
+            time.sleep(1)  # Обновление дисплея каждые 1 секунду
+    except KeyboardInterrupt:
+        print("Программа остановлена пользователем.")
+
+
+if __name__ == "__main__":
+    main()

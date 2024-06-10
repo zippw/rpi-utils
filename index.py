@@ -6,13 +6,16 @@ from rpi_ws281x import Color, PixelStrip
 import RPi.GPIO as GPIO
 import sacn
 import subprocess
-import json
-from datetime import datetime
+import psutil
+import re
+import threading
+
+ASSETS_PATH = "/home/zw/rpi-utils/assets/"
 
 
 class OLEDController:
-    def __init__(self, rst=None, dc=23, spi_port=0, spi_device=0):
-        self.disp = Adafruit_SSD1306.SSD1306_128_64(rst=rst)
+    def __init__(self):
+        self.disp = Adafruit_SSD1306.SSD1306_128_64(rst=None)
 
         self.disp.begin()
 
@@ -23,68 +26,88 @@ class OLEDController:
         self.height = self.disp.height
         self.image = Image.new("1", (self.width, self.height))  # 1 - 1 bit color image
         self.draw = ImageDraw.Draw(self.image)
-        self.font = ImageFont.truetype("assets/Consolas.ttf", 8)
-
-        self.frames = []
-        for i in range(2):
-            frame = Image.open(f"assets/frame{i}.png").convert("1")
-            self.frames.append(frame)
-
-        self.current_frame = 0
-        self.slides = [self.show_pm2, self.show_time]
-        self.current_slide = 0
+        self.icons = {
+            "cpu": Image.open(ASSETS_PATH + "cpu.png").resize((14, 14)).convert("1")
+        }
+        self.bg = Image.open(ASSETS_PATH + "frame0.png").convert("1")
+        self.font = ImageFont.truetype(ASSETS_PATH + "Consolas.ttf", 14)  # 14 = 16 chars widths
+        self.time_font = ImageFont.truetype(ASSETS_PATH + "Consolas.ttf", 9)  # 14 = 16 chars widths
+        # self.font = ImageFont.load_default(14)
 
     def clear_display(self):
         self.draw.rectangle((0, 0, self.width, self.height), outline=0, fill=0)
         self.disp.image(self.image.rotate(180))
         self.disp.display()
 
-    def show_pm2(self):
-        pm2_processes = get_pm2_processes()
-
-        for i, process in enumerate(pm2_processes):
-            max_id_len = max(len(str(process["pm_id"])) for process in pm2_processes)
-            max_id_len = max_id_len if max_id_len > 2 else 2
-            pdg = 8
-            self.draw.text(
-                (pdg, pdg),
-                "-" * (2 + max_id_len + 3 + 10 + 2),
-                font=self.font,
-                fill=255,
-            )
-            self.draw.text(
-                (pdg, pdg + 8),
-                f"| {'id'[:max_id_len]:<{max_id_len}} | {'name'[:10]:<10} |",
-                font=self.font,
-                fill=255,
-            )
-            self.draw.text(
-                (pdg, pdg + 8 * 2),
-                "-" * (2 + max_id_len + 3 + 10 + 2),
-                font=self.font,
-                fill=255,
-            )
-            for i, process in enumerate(pm2_processes):
-                self.draw.text(
-                    (pdg, pdg + 8 * 3 + i * 8),
-                    f"| {str(process['pm_id'])[:max_id_len]:<{max_id_len}} | {process['name'][:10]:<10} |",
-                    font=self.font,
-                    fill=255,
-                )
-
-    def show_time(self):
-        self.draw.text((0, 8), datetime.now().strftime("%H:%M"), font=self.font, fill=255)
-
-    def update_display(self):
+    def update_display(self, stats):
         self.draw.rectangle((0, 0, self.width, self.height), outline=0, fill=0)
-        self.image.paste(self.frames[self.current_frame], (0, 0))
+        self.image.paste(self.bg, (0, 0))
+        # self.image.paste(self.icons['cpu'], (4, 18))
 
-        self.slides[self.current_slide]()
-
+        # self.draw.text((4, 4), "▮▮▮▮▮▯▯▯▯▯", font=self.font, fill=255)
+        self.draw.text((4, 18), stats["temperature"], font=self.font, fill=255)
+        self.draw.text((4, 32), stats["cpu_usage"], font=self.font, fill=255)
+        temp_progress = 0 if stats["memory_usage"] == "N/A" else round(60 * (float(stats["memory_usage"].strip('%')) / 100))
+        self.draw.rectangle((65, 3, 65 + temp_progress, 3 + 4), fill=255)
         self.disp.image(self.image.rotate(180))
         self.disp.display()
-        self.current_slide = (self.current_slide + 1) % len(self.slides)
-        # self.current_frame = (self.current_frame + 1) % len(self.frames)
+        self.image.save("a.png")
+
+
+class Monitoring:
+    def __init__(self):
+        self.stats = {
+            "time": "N/A",
+            "temperature": "N/A",
+            "cpu_usage": "N/A",
+            "memory_usage": "N/A",
+        }
+
+    def updater(self, func, key, interval):
+        while True:
+            self.stats[key] = func()
+            time.sleep(interval)
+
+    def get_time(self):
+        return time.strftime("%H:%M:%S")
+
+    def get_temperature(self):
+        try:
+            output = subprocess.check_output(["sensors"], encoding="utf-8")
+            temp_pattern = re.compile(r"temp\d+:\s+\+([\d\.]+)°C")
+            temperatures = temp_pattern.findall(output)
+            return f"{temperatures[0]}°C" if temperatures else "N/A"
+        except subprocess.CalledProcessError as e:
+            print(f"Failed to get temperature: {e}")
+            return "N/A"
+
+    def get_cpu_usage(self):
+        return f"{psutil.cpu_percent(interval=1)}%"
+
+    def get_memory_usage(self):
+        return f"{psutil.virtual_memory().percent}%"
+
+    def main(self):
+        threads = [
+            threading.Thread(target=self.updater, args=(self.get_time, "time", 1)),
+            threading.Thread(
+                target=self.updater, args=(self.get_temperature, "temperature", 5)
+            ),
+            threading.Thread(
+                target=self.updater, args=(self.get_cpu_usage, "cpu_usage", 1)
+            ),
+            threading.Thread(
+                target=self.updater, args=(self.get_memory_usage, "memory_usage", 1)
+            ),
+        ]
+
+        for thread in threads:
+            thread.daemon = True
+            thread.start()
+
+        while True:
+            oled_controller.update_display(self.stats)
+            time.sleep(1)
 
 
 class LightController:
@@ -117,9 +140,6 @@ class LightController:
         for strip in self.strips:
             strip.begin()
 
-        # Generate gradient
-        self.gradient = self.generate_gradient(self.COLORS, self.STEP)
-
         # Setup sACN receiver
         self.receiver = sacn.sACNreceiver()
         self.receiver.start()
@@ -137,30 +157,6 @@ class LightController:
                 else:
                     self.lights_check = False
                 self.fade_lights(self.lights_check)
-
-    def generate_gradient(self, colors, step):
-        gradient = []
-        for i in range(len(colors)):
-            gradient.append(colors[i])
-            next_color = colors[(i + 1) % len(colors)]
-            for j in range(1, step):
-                gradient.append(
-                    [
-                        round(
-                            colors[i][k] + ((next_color[k] - colors[i][k]) / step * j)
-                        )
-                        for k in range(3)
-                    ]
-                )
-        return gradient
-
-    def update_lights(self, gradient, index):
-        for i in range(len(self.DEFAULT_LIGHT)):
-            for j in range(self.LED_COUNT[self.DEFAULT_LIGHT[i]]):
-                r, g, b = gradient[(index + j) % len(gradient)]
-                self.strips[self.DEFAULT_LIGHT[i]].setPixelColor(j, Color(r, g, b))
-            self.strips[self.DEFAULT_LIGHT[i]].show()
-        return (index + 1) % len(gradient)
 
     def process_packet(self, packet):
         total_leds = sum(self.LED_COUNT)
@@ -195,32 +191,13 @@ class LightController:
             time.sleep(self.LIGHTS_SWITCH_FADE_TIME / 20)
 
 
-def get_pm2_processes():
-    result = subprocess.run(
-        ["pm2", "jlist"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
-    )
-
-    if result.returncode != 0:
-        print(f"pm2 cmd error: {result.stderr}")
-        return []
-
-    # Парсинг JSON-ответа
-    processes = json.loads(result.stdout)
-    return processes
-
-
 if __name__ == "__main__":
     oled_controller = OLEDController()
     light_controller = LightController()
+    monitoring = Monitoring()
 
     try:
-        while True:
-            oled_controller.update_display()
-            # if not light_controller.lights_check:
-            #     light_controller.gradient_index = light_controller.update_lights(
-            #         light_controller.gradient, light_controller.gradient_index
-            #     )
-            time.sleep(5)
+        monitoring.main()
 
     except KeyboardInterrupt:
         oled_controller.clear_display()
